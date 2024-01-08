@@ -1,0 +1,33 @@
+{
+  "name": "whale-list-twitter-bot",
+  "version": "0.0.1",
+  "description": "Watches NFT artists collected by the biggest collectors across Ethereum and tweets when they mint a new piece",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "ts-node node_modules/tape/bin/tape src/**/spec.ts",
+    "start": "dist/index.js",
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukewhyte/whale-list-twitter-bot.git"
+  },
+  "author": "Luke Whyte",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukewhyte/whale-list-twitter-bot/issues"
+  },
+  "homepage": "https://github.com/lukewhyte/whale-list-twitter-bot#readme",
+  "dependencies": {
+    "alchemy-sdk": "^3.1.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.7",
+    "@types/tape": "^5.6.4",
+    "dotenv": "^16.3.1",
+    "tape": "^5.7.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

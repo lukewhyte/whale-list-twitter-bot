@@ -1,0 +1,17 @@
+# dependencies
+/node_modules
+
+#production
+/dist
+
+#local
+/local-assets
+
+#npm error log
+npm-debug.log*
+
+#environment variables
+.env
+
+#oh macintosh
+.DS_Store
