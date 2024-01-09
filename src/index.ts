@@ -7,6 +7,9 @@ import getMarketplaceTokenCreators from './getMarketplaceTokenCreators';
 import getWhales from './getWhales';
 import getTokensOwnedByWhales from './getTokensOwnedByWhales';
 import getWhalesList from './getWhalesList';
+import listenForMints from './listenForMints';
+import postToTwitter from './postToTwitter';
+import transactionToNFT from './transactionToNFT';
 
 dotenv.config();
 
@@ -21,9 +24,12 @@ const launchBot = async () => {
 
   const tokenCreators = await getMarketplaceTokenCreators(alchemy, logger)
   const whaleTokens = await getTokensOwnedByWhales(getWhales(), alchemy, logger)
-  const whaleList = getWhalesList(tokenCreators, whaleTokens)
+  const whaleListOfCreators = getWhalesList(tokenCreators, whaleTokens)
 
-  console.log(whaleList)
+  listenForMints(whaleListOfCreators, async (txn) => {
+    const nftResult = await transactionToNFT(txn, alchemy, logger)
+    postToTwitter(nftResult)
+  }, alchemy)
 }
 
 launchBot()

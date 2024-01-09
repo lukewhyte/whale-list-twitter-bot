@@ -2,6 +2,7 @@ import { Logger } from 'winston';
 import { Alchemy, AssetTransfersCategory, AssetTransfersResult, fromHex } from 'alchemy-sdk'
 import { SUPERRARE_V1, SUPERRARE_V2, ZERO_ADDRESS } from '../constants'
 import getBatchedAssetTransfers from '../getBatchedAssetTransfers'
+import { TokenCreators } from '../interfaces';
 
 interface Tokens {
   [key: string]: string
@@ -29,7 +30,7 @@ const getTokenFromHash = (mint: AssetTransfersResult) => {
   return `${mint.rawContract.address}:${fromHex(mint.rawContract.value)}`
 }
 
-export const buildTokenHash = (mints: AssetTransfersResult[]) => mints.reduce((
+export const buildTokenHash = (mints: AssetTransfersResult[]): TokenCreators => mints.reduce((
   tokens: Tokens,
   mint: AssetTransfersResult
 ) => {
@@ -38,25 +39,30 @@ export const buildTokenHash = (mints: AssetTransfersResult[]) => mints.reduce((
 }, {})
 
 const getMarketplaceTokenCreators = async (alchemy: Alchemy, logger: Logger) => {
-  const srV1Mints = await getBatchedAssetTransfers({
-    alchemy,
-    logger,
-    assetTransfers: [],
-    transferParams: SR_V1_PARAMS,
-    isFirst: true,
-    ref: 'SuperRare V1 transfers'
-  })
+  try {
+    const srV1Mints = await getBatchedAssetTransfers({
+      alchemy,
+      logger,
+      assetTransfers: [],
+      transferParams: SR_V1_PARAMS,
+      isFirst: true,
+      ref: 'SuperRare V1 transfers'
+    })
 
-  const srV2Mints = await getBatchedAssetTransfers({
-    alchemy,
-    logger,
-    assetTransfers: [],
-    transferParams: SR_V2_PARAMS,
-    isFirst: true,
-    ref: 'SuperRare V2 transfers'
-  })
+    const srV2Mints = await getBatchedAssetTransfers({
+      alchemy,
+      logger,
+      assetTransfers: [],
+      transferParams: SR_V2_PARAMS,
+      isFirst: true,
+      ref: 'SuperRare V2 transfers'
+    })
 
-  return buildTokenHash(srV1Mints.concat(srV2Mints))
+    return buildTokenHash(srV1Mints.concat(srV2Mints))
+  } catch(err) {
+    logger.error(err)
+    return {}
+  }
 }
 
 export default getMarketplaceTokenCreators

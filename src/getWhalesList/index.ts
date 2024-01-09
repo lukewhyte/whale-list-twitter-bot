@@ -1,6 +1,4 @@
-interface TokenCreators {
-  [key: string]: string
-}
+import { TokenCreators } from "../interfaces"
 
 const getWhalesList = (tokenCreators: TokenCreators, whaleTokens: string[]) => {
   const creatorSet: Set<string> = new Set()

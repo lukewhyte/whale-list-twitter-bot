@@ -7,8 +7,9 @@
 #local
 /local-assets
 
-#npm error log
+#logs
 npm-debug.log*
+/logs/*
 
 #environment variables
 .env

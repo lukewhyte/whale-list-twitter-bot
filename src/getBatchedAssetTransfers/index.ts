@@ -1,14 +1,6 @@
 import { Logger } from 'winston';
 import { Alchemy, AssetTransfersParams, AssetTransfersResponse, AssetTransfersResult } from "alchemy-sdk";
-
-interface BatchedAssetTransfersParams {
-  alchemy: Alchemy
-  assetTransfers: AssetTransfersResult[]
-  transferParams: AssetTransfersParams
-  isFirst: boolean
-  logger: Logger
-  ref?: string
-}
+import { BatchedAssetTransfersParams } from '../interfaces';
 
 const getBatchedAssetTransfers = async (params: BatchedAssetTransfersParams) => {
   const {
@@ -41,7 +33,7 @@ const getBatchedAssetTransfers = async (params: BatchedAssetTransfersParams) => 
     logger.info(`${ref} - complete`)
     return assetTransfers.concat(res.transfers)
   } catch(err) {
-    logger.error(err)
+    logger.error(err.message)
     return assetTransfers
   }
 }
