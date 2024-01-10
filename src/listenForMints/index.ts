@@ -1,5 +1,5 @@
 import { Alchemy, AlchemyMinedTransactionsAddress, AlchemySubscription, NonEmptyArray, TransfersNftResponse } from "alchemy-sdk";
-import { NFTResult, Transaction, TransactionResponse } from "../interfaces";
+import { Transaction, TransactionResponse } from "../interfaces";
 import { ZERO_ADDRESS } from "../constants";
 
 const formatAddress = (address: string): AlchemyMinedTransactionsAddress => ({
