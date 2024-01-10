@@ -19,7 +19,7 @@ The project is written using Node & Typescript, with all modules located in `/sr
 
 Let's walk through the execution process:
 
-1. We pull the list of collectors from [getWhales](src/getWhales/]. For now, the collector list is static, but I'd like to refresh it via polling in the near future.
+1. We pull the list of collectors from [getWhales](src/getWhales/). For now, the collector list is static, but I'd like to refresh it via polling in the near future.
 2. Utilizing [getMarketplace](src/getMarketplace/), we grab a list of every token ever minted on SuperRare across both contracts: `tokenCreators`.
 3. Via [getTokensOwnedByWhales](src/getTokensOwnedByWhales/), we then pull a list of every SuperRare token this group of collectors has ever owned. We exclude tokens they minted themselves, but include all transfers, whether purchased or gifted: `whaleTokens`.
 4. We then filter `tokenCreators` against `whaleTokens` to produce a list of every artist ever collected by one or more of our 100 SR whale collectors.
